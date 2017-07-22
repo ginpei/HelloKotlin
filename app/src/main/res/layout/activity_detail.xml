@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Material.Display1"
-            tools:text="mmmmmm" />
+            tools:text="Buy milk 4L" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
