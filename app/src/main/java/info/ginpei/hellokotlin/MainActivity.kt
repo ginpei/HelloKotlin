@@ -3,14 +3,16 @@ package info.ginpei.hellokotlin
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private val tag = "MainActivity"
+    private val tag = "G#MainActivity"
 
     var tasks: Array<Task> = Task.dummyArray()
 
@@ -46,6 +48,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startDetailActivity(task: Task) {
+        val db = FirebaseDatabase.getInstance()
+        val ref = db.getReference("lastOpened")
+        ref.setValue(task.title)
+        Log.d(tag, "added: ${task.title}")
+
         val intent = Intent(applicationContext, DetailActivity::class.java)
         intent.putExtra("task", task)
         startActivity(intent)
