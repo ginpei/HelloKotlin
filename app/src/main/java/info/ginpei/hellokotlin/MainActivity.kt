@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 val t = tasks.get(position)
 
                 (v.findViewById(android.R.id.text1) as TextView).text = t.title
-                (v.findViewById(android.R.id.text2) as TextView).text = "When could you do ${t.title}?"
+                (v.findViewById(android.R.id.text2) as TextView).text = t.description
 
                 return v
             }

@@ -19,6 +19,7 @@ class DetailActivity : AppCompatActivity() {
         val task = intent.getSerializableExtra("task")
         if (task is Task) {
             titleTextView.text = task.title
+            descriptionTextView.text = task.description
         }
     }
 
