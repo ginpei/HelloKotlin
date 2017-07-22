@@ -3,12 +3,12 @@ package info.ginpei.hellokotlin
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +21,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         prepareTaskList()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.header_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item == null) {
+            return super.onOptionsItemSelected(item)
+        }
+
+        when (item.getItemId()) {
+            R.id.createNote -> startCreateNoteActivity()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
     }
 
     private fun prepareTaskList() {
@@ -47,11 +65,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun startCreateNoteActivity() {
+        val intent = Intent(applicationContext, CreateNoteActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun startDetailActivity(task: Task) {
-        val db = FirebaseDatabase.getInstance()
-        val ref = db.getReference("lastOpened")
-        ref.setValue(task.title)
-        Log.d(tag, "added: ${task.title}")
+//        val db = FirebaseDatabase.getInstance()
+//        val ref = db.getReference("lastOpened")
+//        ref.setValue(task.title)
+//        Log.d(tag, "added: ${task.title}")
 
         val intent = Intent(applicationContext, DetailActivity::class.java)
         intent.putExtra("task", task)
