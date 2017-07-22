@@ -1,6 +1,8 @@
 package info.ginpei.hellokotlin
 
-class Task(var title: String) {
+import java.io.Serializable
+
+class Task(var title: String): Serializable {
     companion object {
         fun dummyArray(): Array<Task> = arrayOf(
                 Task("Buy milk"),

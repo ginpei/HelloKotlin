@@ -1,8 +1,8 @@
 package info.ginpei.hellokotlin
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startDetailActivity(task: Task) {
-        Log.d(tag, "Task ${task.title}")
+        val intent = Intent(applicationContext, DetailActivity::class.java)
+        intent.putExtra("task", task)
+        startActivity(intent)
     }
 }
