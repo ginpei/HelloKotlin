@@ -7,6 +7,9 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private val tag = "MainActivity"
+
+    var tasks: Array<Task> = arrayOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +19,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun helloButton_onClick(view: View) {
-        Log.d("MainActivity", "Hello!")
+        val task = Task("title")
+        tasks = tasks.plus(task)
+
+        Log.d(tag, "Hello! " + tasks.size)
     }
 
 
