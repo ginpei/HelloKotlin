@@ -1,10 +1,12 @@
 package info.ginpei.hellokotlin
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
@@ -44,6 +46,18 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun delete() {
-        Log.d(tag, "delete")
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Delete")
+        builder.setMessage("Are you sure to delete this task?")
+
+        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
+            Toast.makeText(applicationContext, "The task has been done.", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+        builder.setNegativeButton(android.R.string.cancel, null)
+
+        builder.show()
     }
 }
