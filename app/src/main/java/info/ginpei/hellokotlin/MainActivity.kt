@@ -71,11 +71,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startDetailActivity(task: Task) {
-//        val db = FirebaseDatabase.getInstance()
-//        val ref = db.getReference("lastOpened")
-//        ref.setValue(task.title)
-//        Log.d(tag, "added: ${task.title}")
-
         val intent = Intent(applicationContext, DetailActivity::class.java)
         intent.putExtra("task", task)
         startActivity(intent)
