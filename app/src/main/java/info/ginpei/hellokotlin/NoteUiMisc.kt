@@ -1,7 +1,9 @@
 package info.ginpei.hellokotlin
 
+import android.content.Context
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 
 object NoteUiMisc {
     private val tag = "G#NoteUiMisc"
@@ -16,5 +18,9 @@ object NoteUiMisc {
         builder.setNegativeButton(android.R.string.cancel, null)
 
         builder.show()
+    }
+
+    fun toastForBlankTitle(context: Context) {
+        Toast.makeText(context, "Title is required.", Toast.LENGTH_SHORT).show()
     }
 }

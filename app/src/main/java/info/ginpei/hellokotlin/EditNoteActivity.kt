@@ -48,12 +48,12 @@ class EditNoteActivity : AppCompatActivity() {
     private fun updateNote() {
         note.title = titleEditText.text.toString()
         note.description = descriptionEditText.text.toString()
-        if (note.save()) {
-            Toast.makeText(applicationContext, "The note is updated.", Toast.LENGTH_SHORT).show()
-            finish()
-        }
-        else {
-            // TODO error
+        when (note.save()) {
+            Note.SaveResult.OK -> {
+                Toast.makeText(applicationContext, "The note is updated.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            Note.SaveResult.BLANK_TITLE -> NoteUiMisc.toastForBlankTitle(applicationContext)
         }
     }
 }

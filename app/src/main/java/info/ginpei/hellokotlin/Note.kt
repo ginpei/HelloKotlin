@@ -30,7 +30,12 @@ data class Note(var title: String, var description: String = "") : Serializable 
     }
 
 
-    fun save(): Boolean {
+    fun save(): SaveResult {
+        if (title.isBlank()) {
+            Log.d(tag, "save() title is empty")
+            return SaveResult.BLANK_TITLE
+        }
+
         val ref = if (id.isEmpty()) {
             Log.d(tag, "save() creating a new record")
             storage.push()
@@ -44,10 +49,15 @@ data class Note(var title: String, var description: String = "") : Serializable 
 
         Log.d(tag, "save() : $id / $title / $description")
 
-        return true
+        return SaveResult.OK
     }
 
     fun delete() {
         storage.child(id).removeValue()
+    }
+
+    enum class SaveResult {
+        OK,
+        BLANK_TITLE,
     }
 }
