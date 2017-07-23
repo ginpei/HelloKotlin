@@ -5,14 +5,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import java.io.Serializable
 
-data class Task(var title: String, var description: String = "") : Serializable {
-    private val tag = "G#Task"
+data class Note(var title: String, var description: String = "") : Serializable {
+    private val tag = "G#Note"
 
     var id = ""
         private set
 
     private val storage
-        get() = FirebaseDatabase.getInstance().getReference("task")
+        get() = FirebaseDatabase.getInstance().getReference("note")
 
     constructor(data: DataSnapshot) : this("") {
         setData(data)

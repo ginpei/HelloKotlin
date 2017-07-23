@@ -11,19 +11,19 @@ import kotlinx.android.synthetic.main.activity_detail.*
 class DetailActivity : AppCompatActivity() {
     private val tag = "G#DetailActivity"
 
-    private lateinit var task: Task
+    private lateinit var note: Note
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val task = intent.getSerializableExtra("task") as? Task
-        if (task != null) {
-            this.task = task
-            titleTextView.text = task.title
-            descriptionTextView.text = task.description
+        val note = intent.getSerializableExtra("note") as? Note
+        if (note != null) {
+            this.note = note
+            titleTextView.text = note.title
+            descriptionTextView.text = note.description
         } else {
-            Toast.makeText(applicationContext, "Task was not found.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Note was not found.", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
@@ -52,9 +52,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun delete() {
-        TaskUiMisc.askDelete(this) {
-            task.delete()
-            Toast.makeText(applicationContext, "The task has been done.", Toast.LENGTH_SHORT).show()
+        NoteUiMisc.askDelete(this) {
+            note.delete()
+            Toast.makeText(applicationContext, "The note has been done.", Toast.LENGTH_SHORT).show()
             finish()
         }
     }

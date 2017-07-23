@@ -36,9 +36,9 @@ class CreateNoteActivity : AppCompatActivity() {
     private fun createNote() {
         val title = titleEditText.text.toString()
         val description = descriptionTextEdit.text.toString()
-        val task = Task(title, description)
-        if (task.save()) {
-            Toast.makeText(applicationContext, "A new task is added.", Toast.LENGTH_SHORT).show()
+        val note = Note(title, description)
+        if (note.save()) {
+            Toast.makeText(applicationContext, "A new note is added.", Toast.LENGTH_SHORT).show()
             finish()
         }
         else {
