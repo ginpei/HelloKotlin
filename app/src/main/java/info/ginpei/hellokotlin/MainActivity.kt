@@ -28,6 +28,12 @@ class MainActivity : AppCompatActivity() {
         prepareTaskList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d(tag, "onResume() num of tasks=${tasks.size}")
+        taskListAdapter.notifyDataSetChanged()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.header_main, menu)
@@ -123,11 +129,17 @@ class MainActivity : AppCompatActivity() {
 
                 val task = Task(data)
                 tasks.add(task)
+                Log.d(tag, "onChildAdded() num of tasks=${tasks.size}")
                 taskListAdapter.notifyDataSetChanged()
             }
 
-            override fun onChildRemoved(p0: DataSnapshot?) {
-                Log.d(tag, "onChildRemoved()")
+            override fun onChildRemoved(data: DataSnapshot?) {
+                Log.d(tag, "onChildRemoved() ${data}")
+
+                val task = tasks.find { it.id == data?.key }
+                tasks.remove(task)
+                Log.d(tag, "onChildRemoved() num of tasks=${tasks.size} / task exists? ${task != null} / IDs ${tasks.map { it.id }}")
+                taskListAdapter.notifyDataSetChanged()
             }
 
         })
@@ -146,8 +158,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteTask(task: Task) {
         TaskUiMisc.askDelete(this) {
+            task.delete()
             Toast.makeText(applicationContext, "The task has been done.", Toast.LENGTH_SHORT).show()
-            taskListAdapter.notifyDataSetChanged()
         }
     }
 }

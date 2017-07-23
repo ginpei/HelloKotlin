@@ -37,4 +37,8 @@ data class Task(var title: String, var description: String = "") : Serializable 
 
         return true
     }
+
+    fun delete() {
+        storage.child(id).removeValue()
+    }
 }
