@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val tag = "G#MainActivity"
 
     var tasks = ArrayList<Task>()
+    private lateinit var taskListAdapter: ArrayAdapter<Task>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     private fun prepareTaskList() {
         registerForContextMenu(taskListView)
 
-        taskListView.adapter = object : ArrayAdapter<Task>(
+        taskListAdapter = object : ArrayAdapter<Task>(
                 this,
                 android.R.layout.simple_list_item_2,
                 android.R.id.text1,
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity() {
                 return v
             }
         }
+        taskListView.adapter = taskListAdapter
 
         taskListView.setOnItemClickListener { adapterView, view, i, l ->
             val task = tasks[i]
@@ -112,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                 val task = tasks.find { it.id === data?.key }
                 if (task != null) {
                     task.setData(data)
-                    (taskListView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+                    taskListAdapter.notifyDataSetChanged()
                 }
             }
 
@@ -122,7 +124,7 @@ class MainActivity : AppCompatActivity() {
 
                 val task = Task(data)
                 tasks.add(task)
-                (taskListView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+                taskListAdapter.notifyDataSetChanged()
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {
@@ -152,7 +154,7 @@ class MainActivity : AppCompatActivity() {
 
         builder.setPositiveButton(android.R.string.ok) { dialog, which ->
             Toast.makeText(applicationContext, "The task has been done.", Toast.LENGTH_SHORT).show()
-            (taskListView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+            taskListAdapter.notifyDataSetChanged()
         }
 
         builder.setNegativeButton(android.R.string.cancel, null)
