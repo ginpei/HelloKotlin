@@ -1,11 +1,15 @@
 package info.ginpei.hellokotlin
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
@@ -19,9 +23,7 @@ class DetailActivity : AppCompatActivity() {
 
         val note = intent.getSerializableExtra("note") as? Note
         if (note != null) {
-            this.note = note
-            titleTextView.text = note.title
-            descriptionTextView.text = note.description
+            setNote(note)
         } else {
             Toast.makeText(applicationContext, "Note was not found.", Toast.LENGTH_SHORT).show()
             finish()
@@ -47,8 +49,35 @@ class DetailActivity : AppCompatActivity() {
         return true
     }
 
+    private fun setNote(note: Note) {
+        this.note = note
+        udpateData()
+
+        note.ref().addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+                Log.d(tag, "onCancelled()")
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                Log.d(tag, "onDataChange()")
+                udpateData(p0)
+            }
+
+        })
+    }
+
+    fun udpateData(data: DataSnapshot? = null) {
+        Log.d(tag, "udpateData() $data / $note")
+        note.setData(data)
+
+        titleTextView.text = note.title
+        descriptionTextView.text = note.description
+    }
+
     fun edit() {
-        Log.d(tag, "edit")
+        val intent = Intent(applicationContext, EditNoteActivity::class.java)
+        intent.putExtra("note", note)
+        startActivity(intent)
     }
 
     fun delete() {
