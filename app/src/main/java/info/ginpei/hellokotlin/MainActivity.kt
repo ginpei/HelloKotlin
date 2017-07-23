@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.d(tag, "onResume() num of tasks=${tasks.size}")
-        taskListAdapter.notifyDataSetChanged()
+        updateScreen()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                 val task = tasks.find { it.id === data?.key }
                 if (task != null) {
                     task.setData(data)
-                    taskListAdapter.notifyDataSetChanged()
+                    updateScreen()
                 }
             }
 
@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                 val task = Task(data)
                 tasks.add(task)
                 Log.d(tag, "onChildAdded() num of tasks=${tasks.size}")
-                taskListAdapter.notifyDataSetChanged()
+                updateScreen()
             }
 
             override fun onChildRemoved(data: DataSnapshot?) {
@@ -139,10 +139,15 @@ class MainActivity : AppCompatActivity() {
                 val task = tasks.find { it.id == data?.key }
                 tasks.remove(task)
                 Log.d(tag, "onChildRemoved() num of tasks=${tasks.size} / task exists? ${task != null} / IDs ${tasks.map { it.id }}")
-                taskListAdapter.notifyDataSetChanged()
+                updateScreen()
             }
 
         })
+    }
+
+    private fun updateScreen() {
+        taskListAdapter.notifyDataSetChanged()
+        emptyTextView.visibility = if (tasks.size > 0) View.GONE else View.VISIBLE
     }
 
     private fun startCreateNoteActivity() {
