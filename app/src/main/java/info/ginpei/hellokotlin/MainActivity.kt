@@ -28,12 +28,6 @@ class MainActivity : AppCompatActivity() {
         prepareNoteList()
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(tag, "onResume() num of notes=${notes.size}")
-        updateScreen()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.header_main, menu)
