@@ -10,16 +10,16 @@ import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_show_note.*
 
-class DetailActivity : AppCompatActivity() {
-    private val tag = "G#DetailActivity"
+class ShowNoteActivity : AppCompatActivity() {
+    private val tag = "G#ShowNoteActivity"
 
     private lateinit var note: Note
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        setContentView(R.layout.activity_show_note)
 
         val note = intent.getSerializableExtra("note") as? Note
         if (note != null) {
@@ -32,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.header_detail, menu)
+        inflater.inflate(R.menu.header_show_note, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

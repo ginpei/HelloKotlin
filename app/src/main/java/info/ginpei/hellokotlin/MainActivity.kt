@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
         noteListView.setOnItemClickListener { adapterView, view, i, l ->
             val note = notes[i]
-            startDetailActivity(note)
+            showNote(note)
         }
 
         val db = FirebaseDatabase.getInstance().getReference("note")
@@ -155,8 +155,8 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun startDetailActivity(note: Note) {
-        val intent = Intent(applicationContext, DetailActivity::class.java)
+    private fun showNote(note: Note) {
+        val intent = Intent(applicationContext, ShowNoteActivity::class.java)
         intent.putExtra("note", note)
         startActivity(intent)
     }
