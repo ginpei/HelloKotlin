@@ -2,14 +2,14 @@ package info.ginpei.hellokotlin
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -46,7 +46,34 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater = menuInflater
+        inflater.inflate(R.menu.context_main_tasks, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        val info = item?.getMenuInfo() as AdapterView.AdapterContextMenuInfo
+        val position = info.id.toInt()
+        val task = tasks[position]
+        when (item.getItemId()) {
+            R.id.editMenuItem -> {
+                Log.d(tag, "edit ${task.title}")  // TODO move to editor page
+                return true
+            }
+
+            R.id.deleteMenuItem -> {
+                deleteTask(task)
+                return true
+            }
+
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun prepareTaskList() {
+        registerForContextMenu(taskListView)
+
         taskListView.adapter = object : ArrayAdapter<Task>(
                 this,
                 android.R.layout.simple_list_item_2,
@@ -114,5 +141,22 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, DetailActivity::class.java)
         intent.putExtra("task", task)
         startActivity(intent)
+    }
+
+    private fun deleteTask(task: Task) {
+        // TODO create a common dialog class
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Delete")
+        builder.setMessage("Are you sure to delete this task?")
+
+        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
+            Toast.makeText(applicationContext, "The task has been done.", Toast.LENGTH_SHORT).show()
+            (taskListView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+        }
+
+        builder.setNegativeButton(android.R.string.cancel, null)
+
+        builder.show()
     }
 }
