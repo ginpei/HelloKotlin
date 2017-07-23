@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_note.*
 
 class CreateNoteActivity : AppCompatActivity() {
@@ -39,7 +38,7 @@ class CreateNoteActivity : AppCompatActivity() {
         val note = Note(title, description)
         when (note.save()) {
             Note.SaveResult.OK -> {
-                Toast.makeText(applicationContext, "A new note is added.", Toast.LENGTH_SHORT).show()
+                NoteUiMisc.toastForCreated(applicationContext)
                 finish()
             }
             Note.SaveResult.BLANK_TITLE -> NoteUiMisc.toastForBlankTitle(applicationContext)
