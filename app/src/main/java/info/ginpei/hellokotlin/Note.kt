@@ -2,7 +2,6 @@ package info.ginpei.hellokotlin
 
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.io.Serializable
 
@@ -15,11 +14,12 @@ data class Note(var title: String, var description: String = "") : Serializable 
     private val storage
         get() = FirebaseDatabase.getInstance().getReference("note")
 
+    val ref
+        get() = storage.child(id)
+
     constructor(data: DataSnapshot) : this("") {
         setData(data)
     }
-
-    fun ref(): DatabaseReference = storage.child(id)
 
     fun setData(data: DataSnapshot?) {
         if (data == null) return

@@ -53,7 +53,7 @@ class DetailActivity : AppCompatActivity() {
         this.note = note
         udpateData()
 
-        note.ref().addValueEventListener(object : ValueEventListener {
+        note.ref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 Log.d(tag, "onCancelled()")
             }
