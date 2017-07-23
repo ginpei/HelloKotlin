@@ -28,12 +28,18 @@ data class Note(var title: String, var description: String = "") : Serializable 
 
 
     fun save(): Boolean {
-        val ref = storage.push()
+        val ref = if (id.isEmpty()) {
+            Log.d(tag, "save() creating a new record")
+            storage.push()
+        } else {
+            Log.d(tag, "save() fetching own record")
+            storage.child(id)
+        }
         id = ref.key
         ref.child("title").setValue(title)
         ref.child("description").setValue(description)
 
-        Log.d(tag, "save() : $id / title / $description")
+        Log.d(tag, "save() : $id / $title / $description")
 
         return true
     }

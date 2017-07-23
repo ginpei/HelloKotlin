@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         val note = notes[position]
         when (item.getItemId()) {
             R.id.editMenuItem -> {
-                Log.d(tag, "edit ${note.title}")  // TODO move to editor page
+                editNote(note)
                 return true
             }
 
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             override fun onChildChanged(data: DataSnapshot?, p1: String?) {
                 Log.d(tag, "onChildChanged() ${data} / ${p1}")
 
-                val note = notes.find { it.id === data?.key }
+                val note = notes.find { it.id == data?.key }
                 if (note != null) {
                     note.setData(data)
                     updateScreen()
@@ -157,6 +157,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun startDetailActivity(note: Note) {
         val intent = Intent(applicationContext, DetailActivity::class.java)
+        intent.putExtra("note", note)
+        startActivity(intent)
+    }
+
+    private fun editNote(note: Note) {
+        val intent = Intent(applicationContext, EditNoteActivity::class.java)
         intent.putExtra("note", note)
         startActivity(intent)
     }
