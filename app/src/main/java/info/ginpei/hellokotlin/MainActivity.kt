@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         when (item.getItemId()) {
-            R.id.createNote -> startCreateNoteActivity()
+            R.id.createNote -> createNote()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
         emptyTextView.visibility = if (notes.size > 0) View.GONE else View.VISIBLE
     }
 
-    private fun startCreateNoteActivity() {
+    private fun createNote() {
         val intent = Intent(applicationContext, CreateNoteActivity::class.java)
         startActivity(intent)
     }
