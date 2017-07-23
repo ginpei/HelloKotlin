@@ -2,7 +2,6 @@ package info.ginpei.hellokotlin
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.*
@@ -146,19 +145,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteTask(task: Task) {
-        // TODO create a common dialog class
-        val builder = AlertDialog.Builder(this)
-
-        builder.setTitle("Delete")
-        builder.setMessage("Are you sure to delete this task?")
-
-        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
+        TaskUiMisc.askDelete(this) {
             Toast.makeText(applicationContext, "The task has been done.", Toast.LENGTH_SHORT).show()
             taskListAdapter.notifyDataSetChanged()
         }
-
-        builder.setNegativeButton(android.R.string.cancel, null)
-
-        builder.show()
     }
 }
