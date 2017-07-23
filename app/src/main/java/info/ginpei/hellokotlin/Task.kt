@@ -11,7 +11,8 @@ data class Task(var title: String, var description: String = "") : Serializable 
     var id = ""
         private set
 
-    private val storage = FirebaseDatabase.getInstance().getReference("task")
+    private val storage
+        get() = FirebaseDatabase.getInstance().getReference("task")
 
     constructor(data: DataSnapshot) : this("") {
         setData(data)
