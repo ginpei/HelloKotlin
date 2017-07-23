@@ -1,26 +1,33 @@
 package info.ginpei.hellokotlin
 
 import android.util.Log
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import java.io.Serializable
 
-class Task(var title: String, var description: String = "") : Serializable {
+data class Task(var title: String, var description: String = "") : Serializable {
     private val tag = "G#Task"
 
-    companion object {
-        fun dummyArray(): Array<Task> = arrayOf(
-                Task("Buy milk"),
-                Task("Buy chocolate", "as many as you can if cheap"),
-                Task("Buy house"),
-                Task("Buy whole life", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-        )
+    var id = ""
+        private set
+
+    private val storage = FirebaseDatabase.getInstance().getReference("task")
+
+    constructor(data: DataSnapshot) : this("") {
+        setData(data)
     }
 
-    private var id = ""
+    fun setData(data: DataSnapshot?) {
+        if (data == null) return
+
+        id = data.key
+        this.title = data.child("title").value as? String ?: ""
+        this.description = data.child("description").value as? String ?: ""
+    }
+
 
     fun save(): Boolean {
-        val db = FirebaseDatabase.getInstance()
-        val ref = db.getReference("task").push()
+        val ref = storage.push()
         id = ref.key
         ref.child("title").setValue(title)
         ref.child("description").setValue(description)
