@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         when (item.getItemId()) {
             R.id.createNote -> createNote()
+            R.id.signoutMenuItem -> signout()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -169,6 +171,18 @@ class MainActivity : AppCompatActivity() {
         UiMisc.Note.askDelete(this) {
             note.delete()
             UiMisc.Note.toastForDeleted(applicationContext)
+        }
+    }
+
+    private fun signout() {
+        val message = "When you sign out from an anonymous account, all notes are gone.\n\nAre you sure to sign out?"
+        UiMisc.ask(this, "Sign out", message) {
+            FirebaseAuth.getInstance().signOut()
+
+            UiMisc.toast(applicationContext, "OK, see you soon!")
+
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 }

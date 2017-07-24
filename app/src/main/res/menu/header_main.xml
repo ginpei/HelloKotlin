@@ -5,4 +5,8 @@
     <item
         android:id="@+id/createNote"
         android:title="Add a new note" />
+
+    <item
+        android:id="@+id/signoutMenuItem"
+        android:title="Sign out" />
 </menu>

@@ -12,17 +12,21 @@ object UiMisc {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
+    fun ask(activity: AppCompatActivity, title: String, message: String, onOk: () -> Unit) {
+        val builder = AlertDialog.Builder(activity)
+
+        builder.setTitle(title)
+        builder.setMessage(message)
+
+        builder.setPositiveButton(android.R.string.ok) { _, _ -> onOk() }
+        builder.setNegativeButton(android.R.string.cancel, null)
+
+        builder.show()
+    }
+
     object Note {
         fun askDelete(activity: AppCompatActivity, onOk: () -> Unit) {
-            val builder = AlertDialog.Builder(activity)
-
-            builder.setTitle("Delete")
-            builder.setMessage("Are you sure to delete this note?")
-
-            builder.setPositiveButton(android.R.string.ok) { _, _ -> onOk() }
-            builder.setNegativeButton(android.R.string.cancel, null)
-
-            builder.show()
+            ask(activity, "Delete", "Are you sure to delete this note?", onOk)
         }
 
         fun toastForCreated(context: Context) {
