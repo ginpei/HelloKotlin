@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -29,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
             } else {
-                Toast.makeText(applicationContext, "Failed to create an anonymous account.", Toast.LENGTH_SHORT).show()
+                UiMisc.toast(applicationContext, "Failed to create an anonymous account.")
                 stopLoading()
             }
         }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import kotlinx.android.synthetic.main.content_edit_note.*
 
 class EditNoteActivity : AppCompatActivity() {
@@ -22,7 +21,7 @@ class EditNoteActivity : AppCompatActivity() {
             titleEditText.setText(note.title)
             descriptionEditText.setText(note.description)
         } else {
-            Toast.makeText(applicationContext, "Note was not found.", Toast.LENGTH_SHORT).show()
+            UiMisc.toast(applicationContext, "Note was not found.")
             finish()
         }
     }
