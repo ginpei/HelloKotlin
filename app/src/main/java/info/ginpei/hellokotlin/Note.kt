@@ -4,12 +4,16 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import java.io.Serializable
+import java.util.*
 
 data class Note(var title: String, var description: String = "") : Serializable {
     private val tag = "G#Note"
 
     var id = ""
         private set
+
+    var createdAt = 0L
+    var updatedAt = 0L
 
     private val storage
         get() = FirebaseDatabase.getInstance().getReference("note")
@@ -27,6 +31,8 @@ data class Note(var title: String, var description: String = "") : Serializable 
         id = data.key
         this.title = data.child("title").value as? String ?: ""
         this.description = data.child("description").value as? String ?: ""
+        this.createdAt = data.child("createdAt").value as? Long ?: 0
+        this.updatedAt = data.child("updatedAt").value as? Long ?: 0
     }
 
 
@@ -36,16 +42,24 @@ data class Note(var title: String, var description: String = "") : Serializable 
             return SaveResult.BLANK_TITLE
         }
 
-        val ref = if (id.isEmpty()) {
+        val isNew = id.isEmpty()
+        val ref = if (isNew) {
             Log.d(tag, "save() creating a new record")
             storage.push()
         } else {
             Log.d(tag, "save() fetching own record")
             storage.child(id)
         }
+
         id = ref.key
         ref.child("title").setValue(title)
         ref.child("description").setValue(description)
+
+        val now = Calendar.getInstance().time.time  // Date -> Long
+        ref.child("updatedAt").setValue(now)
+        if (isNew) {
+            ref.child("createdAt").setValue(now)
+        }
 
         Log.d(tag, "save() : $id / $title / $description")
 

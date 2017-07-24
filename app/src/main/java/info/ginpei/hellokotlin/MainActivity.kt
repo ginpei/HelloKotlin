@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             showNote(note)
         }
 
-        val db = FirebaseDatabase.getInstance().getReference("note").orderByChild("updatedAt")
+        val db = FirebaseDatabase.getInstance().getReference("note")
         db.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 Log.d(tag, "onCancelled")
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateScreen() {
-        noteListAdapter.notifyDataSetChanged()
+        noteListAdapter.sort { n1, n2 -> if (n1.updatedAt > n2.updatedAt) -1 else 1 }
         emptyTextView.visibility = if (notes.size > 0) View.GONE else View.VISIBLE
     }
 
