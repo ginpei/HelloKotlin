@@ -50,10 +50,10 @@ class EditNoteActivity : AppCompatActivity() {
         note.description = descriptionEditText.text.toString()
         when (note.save()) {
             Note.SaveResult.OK -> {
-                NoteUiMisc.toastForUpdated(applicationContext)
+                UiMisc.Note.toastForUpdated(applicationContext)
                 finish()
             }
-            Note.SaveResult.BLANK_TITLE -> NoteUiMisc.toastForBlankTitle(applicationContext)
+            Note.SaveResult.BLANK_TITLE -> UiMisc.Note.toastForBlankTitle(applicationContext)
         }
     }
 }

@@ -166,9 +166,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteNote(note: Note) {
-        NoteUiMisc.askDelete(this) {
+        UiMisc.Note.askDelete(this) {
             note.delete()
-            NoteUiMisc.toastForDeleted(applicationContext)
+            UiMisc.Note.toastForDeleted(applicationContext)
         }
     }
 }

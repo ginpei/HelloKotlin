@@ -38,10 +38,10 @@ class CreateNoteActivity : AppCompatActivity() {
         val note = Note(title, description)
         when (note.save()) {
             Note.SaveResult.OK -> {
-                NoteUiMisc.toastForCreated(applicationContext)
+                UiMisc.Note.toastForCreated(applicationContext)
                 finish()
             }
-            Note.SaveResult.BLANK_TITLE -> NoteUiMisc.toastForBlankTitle(applicationContext)
+            Note.SaveResult.BLANK_TITLE -> UiMisc.Note.toastForBlankTitle(applicationContext)
         }
     }
 }

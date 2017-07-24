@@ -81,9 +81,9 @@ class ShowNoteActivity : AppCompatActivity() {
     }
 
     fun delete() {
-        NoteUiMisc.askDelete(this) {
+        UiMisc.Note.askDelete(this) {
             note.delete()
-            NoteUiMisc.toastForDeleted(applicationContext)
+            UiMisc.Note.toastForDeleted(applicationContext)
             finish()
         }
     }
