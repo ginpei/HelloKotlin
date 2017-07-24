@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.content_edit_note.*
 
 class EditNoteActivity : AppCompatActivity() {
@@ -47,7 +48,7 @@ class EditNoteActivity : AppCompatActivity() {
     private fun updateNote() {
         note.title = titleEditText.text.toString()
         note.description = descriptionEditText.text.toString()
-        when (note.save()) {
+        when (note.save(FirebaseAuth.getInstance().currentUser!!.uid)) {
             Note.SaveResult.OK -> {
                 UiMisc.Note.toastForUpdated(applicationContext)
                 finish()

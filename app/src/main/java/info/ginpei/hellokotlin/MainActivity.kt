@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     var notes = ArrayList<Note>()
     private lateinit var noteListAdapter: ArrayAdapter<Note>
+
+    private val auth
+        get() = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             showNote(note)
         }
 
-        val db = FirebaseDatabase.getInstance().getReference("note")
+        val db = Note.ofUser(auth.currentUser!!.uid)
         db.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 Log.d(tag, "onCancelled")
@@ -177,7 +179,6 @@ class MainActivity : AppCompatActivity() {
     private fun signOut() {
         val message = "When you sign out from an anonymous account, all notes are gone.\n\nAre you sure to sign out?"
         UiMisc.ask(this, "Sign out", message) {
-            val auth = FirebaseAuth.getInstance()
             auth.currentUser?.delete()  // TODO check FirebaseAuthRecentLoginRequiredException
             auth.signOut()
 
