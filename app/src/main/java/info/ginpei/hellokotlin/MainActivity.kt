@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
 
             UiMisc.toast(applicationContext, "OK, see you soon!")
 
-            val intent = Intent(applicationContext, LoginActivity::class.java)
+            val intent = Intent(applicationContext, SigninActivity::class.java)
             startActivity(intent)
         }
     }

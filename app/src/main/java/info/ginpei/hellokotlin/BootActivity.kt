@@ -14,15 +14,15 @@ class BootActivity : AppCompatActivity() {
 
         FirebaseAuth.getInstance().addAuthStateListener({ firebaseAuth ->
             if (firebaseAuth.currentUser == null) {
-                login()
+                signin()
             } else {
                 start()
             }
         })
     }
 
-    private fun login() {
-        val intent = Intent(applicationContext, LoginActivity::class.java)
+    private fun signin() {
+        val intent = Intent(applicationContext, SigninActivity::class.java)
         startActivity(intent)
     }
 
