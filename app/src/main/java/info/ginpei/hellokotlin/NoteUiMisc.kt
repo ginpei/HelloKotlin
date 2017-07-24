@@ -20,19 +20,23 @@ object NoteUiMisc {
         builder.show()
     }
 
+    private fun toast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
     fun toastForCreated(context: Context) {
-        Toast.makeText(context, "A new note is added.", Toast.LENGTH_SHORT).show()
+        toast(context, "A new note is added.")
     }
 
     fun toastForUpdated(context: Context) {
-        Toast.makeText(context, "The note is updated.", Toast.LENGTH_SHORT).show()
+        toast(context, "The note is updated.")
     }
 
     fun toastForDeleted(context: Context) {
-        Toast.makeText(context, "The note has been done.", Toast.LENGTH_SHORT).show()
+        toast(context, "The note has been done.")
     }
 
     fun toastForBlankTitle(context: Context) {
-        Toast.makeText(context, "Title is required.", Toast.LENGTH_SHORT).show()
+        toast(context, "Title is required.")
     }
 }
