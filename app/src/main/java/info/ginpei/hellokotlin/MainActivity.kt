@@ -177,7 +177,9 @@ class MainActivity : AppCompatActivity() {
     private fun signout() {
         val message = "When you sign out from an anonymous account, all notes are gone.\n\nAre you sure to sign out?"
         UiMisc.ask(this, "Sign out", message) {
-            FirebaseAuth.getInstance().signOut()
+            val auth = FirebaseAuth.getInstance()
+            auth.currentUser?.delete()  // TODO check FirebaseAuthRecentLoginRequiredException
+            auth.signOut()
 
             UiMisc.toast(applicationContext, "OK, see you soon!")
 
