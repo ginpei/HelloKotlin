@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         when (item.getItemId()) {
             R.id.createNote -> createNote()
-            R.id.signoutMenuItem -> signout()
+            R.id.signoutMenuItem -> signOut()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun signout() {
+    private fun signOut() {
         val message = "When you sign out from an anonymous account, all notes are gone.\n\nAre you sure to sign out?"
         UiMisc.ask(this, "Sign out", message) {
             val auth = FirebaseAuth.getInstance()
@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() {
 
             UiMisc.toast(applicationContext, "OK, see you soon!")
 
-            val intent = Intent(applicationContext, SigninActivity::class.java)
+            val intent = Intent(applicationContext, SignInActivity::class.java)
             startActivity(intent)
         }
     }

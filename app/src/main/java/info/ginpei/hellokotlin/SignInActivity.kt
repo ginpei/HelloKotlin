@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_signin.*
+import kotlinx.android.synthetic.main.activity_sign_in.*
 
-class SigninActivity : AppCompatActivity() {
-    private val tag = "G#SigninActivity"
+class SignInActivity : AppCompatActivity() {
+    private val tag = "G#SignInActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signin)
+        setContentView(R.layout.activity_sign_in)
 
         createAnonymousAccountButton.setOnClickListener {
             createAnonymousAccount()
