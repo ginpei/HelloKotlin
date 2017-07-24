@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -25,7 +24,7 @@ class ShowNoteActivity : AppCompatActivity() {
         if (note != null) {
             setNote(note)
         } else {
-            Toast.makeText(applicationContext, "Note was not found.", Toast.LENGTH_SHORT).show()
+            UiMisc.toast(applicationContext, "Note was not found.")
             finish()
         }
     }
@@ -81,9 +80,9 @@ class ShowNoteActivity : AppCompatActivity() {
     }
 
     fun delete() {
-        NoteUiMisc.askDelete(this) {
+        UiMisc.Note.askDelete(this) {
             note.delete()
-            NoteUiMisc.toastForDeleted(applicationContext)
+            UiMisc.Note.toastForDeleted(applicationContext)
             finish()
         }
     }

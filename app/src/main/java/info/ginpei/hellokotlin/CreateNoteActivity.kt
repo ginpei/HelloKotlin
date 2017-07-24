@@ -36,12 +36,12 @@ class CreateNoteActivity : AppCompatActivity() {
         val title = titleEditText.text.toString()
         val description = descriptionTextEdit.text.toString()
         val note = Note(title, description)
-        when (note.save()) {
+        when (note.save(User.currentId)) {
             Note.SaveResult.OK -> {
-                NoteUiMisc.toastForCreated(applicationContext)
+                UiMisc.Note.toastForCreated(applicationContext)
                 finish()
             }
-            Note.SaveResult.BLANK_TITLE -> NoteUiMisc.toastForBlankTitle(applicationContext)
+            Note.SaveResult.BLANK_TITLE -> UiMisc.Note.toastForBlankTitle(applicationContext)
         }
     }
 }

@@ -12,11 +12,9 @@ data class Note(var title: String, var description: String = "") : Serializable 
     var id = ""
         private set
 
+    var userId = ""
     var createdAt = 0L
     var updatedAt = 0L
-
-    private val storage
-        get() = FirebaseDatabase.getInstance().getReference("note")
 
     val ref
         get() = storage.child(id)
@@ -29,19 +27,25 @@ data class Note(var title: String, var description: String = "") : Serializable 
         if (data == null) return
 
         id = data.key
+        this.userId = data.child("userId").value as? String ?: ""
         this.title = data.child("title").value as? String ?: ""
         this.description = data.child("description").value as? String ?: ""
         this.createdAt = data.child("createdAt").value as? Long ?: 0
         this.updatedAt = data.child("updatedAt").value as? Long ?: 0
     }
 
-    fun save(): SaveResult {
+    fun save(userId: String? = null): SaveResult {
         if (title.isBlank()) {
             Log.d(tag, "save() title is empty")
             return SaveResult.BLANK_TITLE
         }
 
         val isNew = id.isEmpty()
+
+        if (isNew && userId == null) {
+            Log.d(tag, "save() user ID is required")
+            return SaveResult.NOT_SIGNED_IN
+        }
 
         val now = Calendar.getInstance().time.time  // Date -> Long
         updatedAt = now
@@ -57,7 +61,11 @@ data class Note(var title: String, var description: String = "") : Serializable 
             storage.child(id)
         }
 
-        id = ref.key
+        if (isNew) {
+            id = ref.key
+            ref.child("userId").setValue(userId)
+        }
+
         ref.child("title").setValue(title)
         ref.child("description").setValue(description)
         ref.child("createdAt").setValue(createdAt)
@@ -72,8 +80,16 @@ data class Note(var title: String, var description: String = "") : Serializable 
         storage.child(id).removeValue()
     }
 
+    companion object {
+        private val storage
+            get() = FirebaseDatabase.getInstance().getReference("note")
+
+        fun ofUser(key: String) = storage.orderByChild("userId").equalTo(key)
+    }
+
     enum class SaveResult {
         OK,
         BLANK_TITLE,
+        NOT_SIGNED_IN,
     }
 }

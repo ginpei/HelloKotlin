@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -45,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         when (item.getItemId()) {
             R.id.createNote -> createNote()
+            R.id.signoutMenuItem -> signOut()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             showNote(note)
         }
 
-        val db = FirebaseDatabase.getInstance().getReference("note")
+        val db = Note.ofUser(User.currentId!!)
         db.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 Log.d(tag, "onCancelled")
@@ -166,9 +166,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteNote(note: Note) {
-        NoteUiMisc.askDelete(this) {
+        UiMisc.Note.askDelete(this) {
             note.delete()
-            NoteUiMisc.toastForDeleted(applicationContext)
+            UiMisc.Note.toastForDeleted(applicationContext)
+        }
+    }
+
+    private fun signOut() {
+        val message = "When you sign out from an anonymous account, all notes are gone.\n\nAre you sure to sign out?"
+        UiMisc.ask(this, "Sign out", message) {
+            User.current?.delete()  // TODO check FirebaseAuthRecentLoginRequiredException
+            User.auth.signOut()
+
+            UiMisc.toast(applicationContext, "OK, see you soon!")
+
+            val intent = Intent(applicationContext, SignInActivity::class.java)
+            startActivity(intent)
         }
     }
 }
