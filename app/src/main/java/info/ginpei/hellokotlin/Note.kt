@@ -35,7 +35,6 @@ data class Note(var title: String, var description: String = "") : Serializable 
         this.updatedAt = data.child("updatedAt").value as? Long ?: 0
     }
 
-
     fun save(): SaveResult {
         if (title.isBlank()) {
             Log.d(tag, "save() title is empty")
