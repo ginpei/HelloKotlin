@@ -13,9 +13,9 @@ class BootActivity : AppCompatActivity() {
 
         User.auth.addAuthStateListener({ firebaseAuth ->
             if (User.loggedIn) {
-                signIn()
-            } else {
                 start()
+            } else {
+                signIn()
             }
         })
     }
