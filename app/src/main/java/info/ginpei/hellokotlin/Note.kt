@@ -43,6 +43,13 @@ data class Note(var title: String, var description: String = "") : Serializable 
         }
 
         val isNew = id.isEmpty()
+
+        val now = Calendar.getInstance().time.time  // Date -> Long
+        updatedAt = now
+        if (isNew) {
+            createdAt = now
+        }
+
         val ref = if (isNew) {
             Log.d(tag, "save() creating a new record")
             storage.push()
@@ -54,14 +61,10 @@ data class Note(var title: String, var description: String = "") : Serializable 
         id = ref.key
         ref.child("title").setValue(title)
         ref.child("description").setValue(description)
+        ref.child("createdAt").setValue(createdAt)
+        ref.child("updatedAt").setValue(updatedAt)
 
-        val now = Calendar.getInstance().time.time  // Date -> Long
-        ref.child("updatedAt").setValue(now)
-        if (isNew) {
-            ref.child("createdAt").setValue(now)
-        }
-
-        Log.d(tag, "save() : $id / $title / $description")
+        Log.d(tag, "save() : $this")
 
         return SaveResult.OK
     }
