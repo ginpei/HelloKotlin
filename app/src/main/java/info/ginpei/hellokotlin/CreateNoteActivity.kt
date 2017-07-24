@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_create_note.*
 
 class CreateNoteActivity : AppCompatActivity() {
@@ -37,7 +36,7 @@ class CreateNoteActivity : AppCompatActivity() {
         val title = titleEditText.text.toString()
         val description = descriptionTextEdit.text.toString()
         val note = Note(title, description)
-        when (note.save(FirebaseAuth.getInstance().currentUser!!.uid)) {
+        when (note.save(User.currentId)) {
             Note.SaveResult.OK -> {
                 UiMisc.Note.toastForCreated(applicationContext)
                 finish()
