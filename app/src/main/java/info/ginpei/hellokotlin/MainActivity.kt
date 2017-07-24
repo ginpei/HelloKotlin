@@ -8,7 +8,6 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,9 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     var notes = ArrayList<Note>()
     private lateinit var noteListAdapter: ArrayAdapter<Note>
-
-    private val auth
-        get() = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             showNote(note)
         }
 
-        val db = Note.ofUser(auth.currentUser!!.uid)
+        val db = Note.ofUser(User.currentId!!)
         db.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 Log.d(tag, "onCancelled")
@@ -179,8 +175,8 @@ class MainActivity : AppCompatActivity() {
     private fun signOut() {
         val message = "When you sign out from an anonymous account, all notes are gone.\n\nAre you sure to sign out?"
         UiMisc.ask(this, "Sign out", message) {
-            auth.currentUser?.delete()  // TODO check FirebaseAuthRecentLoginRequiredException
-            auth.signOut()
+            User.current?.delete()  // TODO check FirebaseAuthRecentLoginRequiredException
+            User.auth.signOut()
 
             UiMisc.toast(applicationContext, "OK, see you soon!")
 

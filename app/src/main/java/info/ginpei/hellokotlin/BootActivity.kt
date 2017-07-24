@@ -3,7 +3,6 @@ package info.ginpei.hellokotlin
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
 
 class BootActivity : AppCompatActivity() {
     private val tag = "G#BootActivity"
@@ -12,8 +11,8 @@ class BootActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_boot)
 
-        FirebaseAuth.getInstance().addAuthStateListener({ firebaseAuth ->
-            if (firebaseAuth.currentUser == null) {
+        User.auth.addAuthStateListener({ firebaseAuth ->
+            if (User.loggedIn) {
                 signIn()
             } else {
                 start()

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
@@ -22,9 +21,8 @@ class SignInActivity : AppCompatActivity() {
     private fun createAnonymousAccount() {
         startLoading()
 
-        val auth = FirebaseAuth.getInstance()
-        auth.signInAnonymously().addOnCompleteListener {
-            if (auth.currentUser != null) {
+        User.auth.signInAnonymously().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
             } else {

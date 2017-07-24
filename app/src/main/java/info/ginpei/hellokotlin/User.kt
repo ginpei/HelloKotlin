@@ -7,7 +7,13 @@ class User {
         val auth
             get() = FirebaseAuth.getInstance()
 
+        val current
+            get() = auth.currentUser
+
+        val loggedIn
+            get() = current != null
+
         val currentId
-            get() = auth.currentUser?.uid
+            get() = current?.uid
     }
 }
