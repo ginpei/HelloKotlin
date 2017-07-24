@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         prepareNoteList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateScreen()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.header_main, menu)
@@ -96,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             showNote(note)
         }
 
-        val db = FirebaseDatabase.getInstance().getReference("note")
+        val db = FirebaseDatabase.getInstance().getReference("note").orderByChild("updatedAt")
         db.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError?) {
                 Log.d(tag, "onCancelled")
