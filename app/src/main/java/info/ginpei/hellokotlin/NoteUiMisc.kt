@@ -25,15 +25,15 @@ object NoteUiMisc {
     }
 
     fun toastForCreated(context: Context) {
-        toast(context, "A new note is added.")
+        toast(context, "A new note has been created.")
     }
 
     fun toastForUpdated(context: Context) {
-        toast(context, "The note is updated.")
+        toast(context, "The note has been updated.")
     }
 
     fun toastForDeleted(context: Context) {
-        toast(context, "The note has been done.")
+        toast(context, "The note has been deleted.")
     }
 
     fun toastForBlankTitle(context: Context) {
