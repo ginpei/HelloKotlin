@@ -83,7 +83,7 @@ class ShowNoteActivity : AppCompatActivity() {
     fun delete() {
         NoteUiMisc.askDelete(this) {
             note.delete()
-            Toast.makeText(applicationContext, "The note has been done.", Toast.LENGTH_SHORT).show()
+            NoteUiMisc.toastForDeleted(applicationContext)
             finish()
         }
     }

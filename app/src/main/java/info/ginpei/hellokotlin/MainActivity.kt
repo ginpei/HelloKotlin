@@ -8,7 +8,6 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -164,7 +163,7 @@ class MainActivity : AppCompatActivity() {
     private fun deleteNote(note: Note) {
         NoteUiMisc.askDelete(this) {
             note.delete()
-            Toast.makeText(applicationContext, "The note has been done.", Toast.LENGTH_SHORT).show()
+            NoteUiMisc.toastForDeleted(applicationContext)
         }
     }
 }

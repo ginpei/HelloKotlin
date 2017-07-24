@@ -28,6 +28,10 @@ object NoteUiMisc {
         Toast.makeText(context, "The note is updated.", Toast.LENGTH_SHORT).show()
     }
 
+    fun toastForDeleted(context: Context) {
+        Toast.makeText(context, "The note has been done.", Toast.LENGTH_SHORT).show()
+    }
+
     fun toastForBlankTitle(context: Context) {
         Toast.makeText(context, "Title is required.", Toast.LENGTH_SHORT).show()
     }
