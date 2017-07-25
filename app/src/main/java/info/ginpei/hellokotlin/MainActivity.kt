@@ -173,8 +173,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun signOut() {
+        Log.d(tag, "signOut()")
         val message = "When you sign out from an anonymous account, all notes are gone.\n\nAre you sure to sign out?"
         UiMisc.ask(this, "Sign out", message) {
+            Log.d(tag, "signOut() OK")
+
             User.current?.delete()  // TODO check FirebaseAuthRecentLoginRequiredException
             User.auth.signOut()
 
@@ -182,6 +185,7 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(applicationContext, SignInActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }
